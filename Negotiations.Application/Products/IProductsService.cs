@@ -1,8 +1,8 @@
-﻿using Negotiations.Domain.Entities;
+﻿using Negotiations.Application.Products.Dtos;
 
 namespace Negotiations.Application.Products;
 public interface IProductsService
 {
-    Task<IEnumerable<Product>> GetAllProductsAsync();
-    Task<Product?> GetProductByIdAsync(int id);
+    Task<IEnumerable<ProductDto>> GetAllProductsAsync();
+    Task<ProductDto?> GetProductByIdAsync(int id);
 }
