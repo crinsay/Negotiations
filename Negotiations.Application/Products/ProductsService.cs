@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.Extensions.Logging;
 using Negotiations.Application.Products.Dtos;
+using Negotiations.Domain.Entities;
 using Negotiations.Domain.Repositories;
 
 namespace Negotiations.Application.Products;
@@ -9,6 +10,15 @@ internal class ProductsService(IProductsRepository productsRepository,
     ILogger<ProductsService> logger,
     IMapper mapper) : IProductsService
 {
+    public Task<int> CreateProductAsync(ProductDto productDto)
+    {
+        logger.LogInformation("Creating a new product with name {ProductName}.", productDto.Name);
+        var product = mapper.Map<Product>(productDto);
+
+        var id = productsRepository.CreateProductAsync(product);
+        return id;
+    }
+
     public async Task<IEnumerable<ProductDto>> GetAllProductsAsync()
     {
         logger.LogInformation("Fetching all products from the repository.");

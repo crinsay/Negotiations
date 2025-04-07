@@ -7,6 +7,13 @@ namespace Negotiations.Infrastructure.Repositories;
 
 internal class ProductsRepository(NegotiationsDbContext dbContext) : IProductsRepository
 {
+    public async Task<int> CreateProductAsync(Product product)
+    {
+        dbContext.Products.Add(product);
+        await dbContext.SaveChangesAsync();
+        return product.Id;
+    }
+
     public async Task<IEnumerable<Product>> GetAllProductsAsync()
     {
         var products = await dbContext.Products.ToListAsync();

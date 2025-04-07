@@ -8,5 +8,6 @@ public class NegotiationProfile : Profile
     public NegotiationProfile()
     {
         CreateMap<Negotiation, NegotiationDto>();
+        CreateMap<NegotiationDto, Negotiation>();
     }
 }

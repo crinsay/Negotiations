@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Negotiations.Application.Products;
+using Negotiations.Application.Products.Dtos;
 
 namespace Negotiations.API.Controllers;
 
@@ -22,5 +23,12 @@ public class ProductsController(IProductsService productsService) : ControllerBa
             return NotFound();
 
         return Ok(product);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult>CreateProductAsync([FromBody] ProductDto productDto)
+    {
+         var productId = await productsService.CreateProductAsync(productDto);
+        return CreatedAtAction(nameof(GetProductById), new { productId }, null);
     }
 }
