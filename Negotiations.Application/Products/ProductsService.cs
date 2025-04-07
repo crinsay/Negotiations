@@ -12,4 +12,11 @@ internal class ProductsService(IProductsRepository productsRepository, ILogger<P
         var products = await productsRepository.GetAllProductsAsync();
         return products;
     }
+
+    public async Task<Product?> GetProductByIdAsync(int id)
+    {
+        logger.LogInformation("Fetching product with ID {ProductId} from the repository.", id);
+        var product = await productsRepository.GetProductByIdAsync(id);
+        return product;
+    }
 }

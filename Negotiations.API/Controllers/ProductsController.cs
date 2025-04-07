@@ -13,4 +13,14 @@ public class ProductsController(IProductsService productsService) : ControllerBa
         var products = await productsService.GetAllProductsAsync();
         return Ok(products);
     }
+
+    [HttpGet("{productId}")]
+    public async Task<IActionResult> GetProductById([FromRoute]int productId)
+    {
+        var product = await productsService.GetProductByIdAsync(productId);
+        if (product == null)
+            return NotFound();
+
+        return Ok(product);
+    }
 }

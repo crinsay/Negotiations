@@ -7,6 +7,12 @@ GET {{Negotiations.API_HostAddress}}/api/products
 
 ###
 
+
+GET {{Negotiations.API_HostAddress}}/api/products/{productId}
+
+###
+
+
 GET {{Negotiations.API_HostAddress}}/api/products/{productId}/negotiation
 
 ###

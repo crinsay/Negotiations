@@ -12,4 +12,10 @@ internal class ProductsRepository(NegotiationsDbContext dbContext) : IProductsRe
         var products = await dbContext.Products.ToListAsync();
         return products;
     }
+
+    public async Task<Product?> GetProductByIdAsync(int id)
+    {
+        var product = await dbContext.Products.FirstOrDefaultAsync(p => p.Id == id);
+        return product;
+    }
 }
