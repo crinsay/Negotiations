@@ -21,8 +21,8 @@ POST {{Negotiations.API_HostAddress}}/api/products
 Content-Type: application/json
 
 {
-  "Name": "Product 1",
-  "Price": 100
+  "Name": "Product 3",
+  "Price": 100.04
 }
 
 ###

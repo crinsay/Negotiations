@@ -1,16 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Components.Forms;
+using Microsoft.AspNetCore.Mvc;
 using Negotiations.Application.Negotiations;
 
 namespace Negotiations.API.Controllers;
 
 [ApiController]
 [Route("api/products/{productId}/negotiation")]
-public class NegotiationsController(INegotiationsService negotiationsService) : ControllerBase
+public class NegotiationsController() : ControllerBase
 {
-    [HttpGet]
-    public async Task<IActionResult> GetAllNegotiaions()
-    {
-        var negotiations = await negotiationsService.GetAllNegotiationsAsync();
-        return Ok(negotiations);
-    }
+
 }

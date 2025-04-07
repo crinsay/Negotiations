@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Negotiations.Application.Products.Commands.CreateProduct;
 using Negotiations.Domain.Entities;
 
 
@@ -10,5 +11,6 @@ public class ProductsProfile : Profile
     {
         CreateMap<Product, ProductDto>();
         CreateMap<ProductDto, Product>();
+        CreateMap<CreateProductCommand, Product>();
     }
 }
