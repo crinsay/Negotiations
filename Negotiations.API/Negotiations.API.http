@@ -1,6 +1,28 @@
-@Negotiations.API_HostAddress = http://localhost:5242
+@Negotiations.API_HostAddress = https://localhost:7289
+@productId = 1
 
-GET {{Negotiations.API_HostAddress}}/weatherforecast/
-Accept: application/json
+
+
+GET {{Negotiations.API_HostAddress}}/api/products
+
+###
+
+
+GET {{Negotiations.API_HostAddress}}/api/products/{{productId}}
+
+###
+
+
+GET {{Negotiations.API_HostAddress}}/api/products/{{productId}}/negotiation
+
+###
+
+POST {{Negotiations.API_HostAddress}}/api/products
+Content-Type: application/json
+
+{
+  "Name": "Product 1",
+  "Price": 100
+}
 
 ###
