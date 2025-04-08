@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Negotiations.Infrastructure.Persistence;
 
@@ -11,9 +12,11 @@ using Negotiations.Infrastructure.Persistence;
 namespace Negotiations.Infrastructure.Migrations
 {
     [DbContext(typeof(NegotiationsDbContext))]
-    partial class NegotiationsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250408120443_IdentityAdded")]
+    partial class IdentityAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
