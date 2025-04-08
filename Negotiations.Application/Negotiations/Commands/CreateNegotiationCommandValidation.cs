@@ -7,7 +7,6 @@ public class CreateNegotiationCommandValidation : AbstractValidator<CreateNegoti
     public CreateNegotiationCommandValidation()
     {
         RuleFor(x => x.SuggestedPrice)
-            .GreaterThan(0)
-            .WithMessage("Suggested price must be greater than 0.");
+            .GreaterThan(0).WithMessage("Suggested price must be greater than 0.");
     }
 }

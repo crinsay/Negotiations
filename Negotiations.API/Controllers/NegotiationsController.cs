@@ -1,9 +1,9 @@
 ﻿using MediatR;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Mvc;
-using Negotiations.Application.Negotiations;
 using Negotiations.Application.Negotiations.Commands;
+using Negotiations.Application.Negotiations.Dtos;
+using Negotiations.Application.Negotiations.Queries.GetAllNegotiationsForProduct;
+using Negotiations.Application.Negotiations.Queries.GetNegotiationByIdForProduct;
 
 namespace Negotiations.API.Controllers;
 
@@ -18,5 +18,19 @@ public class NegotiationsController(IMediator mediator) : ControllerBase
 
         await mediator.Send(command);
         return Created();
+    }
+
+    [HttpGet]
+    public async Task<ActionResult<IEnumerable<NegotiationDto>>> GetAllNegotiationsForProduct([FromRoute] int productId)
+    {
+        var negotiations = await mediator.Send(new GetAllNegotiationsForProductQuery(productId));
+        return Ok(negotiations);
+    }
+
+    [HttpGet("{negotiationId}")]
+    public async Task<IActionResult> GetNegotiationByIdForProduct([FromRoute] int productId, [FromRoute]int negotiationId)
+    {
+        var negotiation = await mediator.Send(new GetNegotiationByIdForProductQuery(productId, negotiationId));
+        return Ok(negotiation);
     }
 }
