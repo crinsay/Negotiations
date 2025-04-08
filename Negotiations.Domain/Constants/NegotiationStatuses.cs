@@ -7,5 +7,5 @@ public static class NegotiationStatuses
     public const string Declined = "Declined";
     public const string Cancelled = "Cancelled";
 
-    public static readonly string[] All = { Pending, Accepted, Declined, Cancelled };
+    public static readonly string[] AllowedEmployeeStatuses = [Accepted, Declined];
 }

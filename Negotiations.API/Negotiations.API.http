@@ -1,6 +1,6 @@
 @Negotiations.API_HostAddress = https://localhost:7289
 @productId = 1
-@negotiationId = 7
+@negotiationId = 6
 
 
 
@@ -47,5 +47,15 @@ GET {{Negotiations.API_HostAddress}}/api/products/{{productId}}/negotiation
 
 //Get a negotiation by id
 GET {{Negotiations.API_HostAddress}}/api/products/{{productId}}/negotiation/{{negotiationId}}
+
+###
+
+//Set a negotiation status
+PATCH {{Negotiations.API_HostAddress}}/api/products/{{productId}}/negotiation
+Content-Type: application/json
+
+{
+  "Status": "Accepted"
+}
 
 ###

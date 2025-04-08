@@ -8,5 +8,5 @@ public interface IProductsRepository
     Task<Product?> GetProductByIdAsync(int id);
     Task<int> CreateProductAsync(Product product);
     Task DeleteProductAsync(Product product);
-    //Task UpdateProductAsync(Product product);
+    Task SaveChanges();
 }

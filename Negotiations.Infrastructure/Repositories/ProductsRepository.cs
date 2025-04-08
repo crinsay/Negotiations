@@ -33,4 +33,6 @@ internal class ProductsRepository(NegotiationsDbContext dbContext) : IProductsRe
             .FirstOrDefaultAsync(p => p.Id == id);
         return product;
     }
+
+    public Task SaveChanges() => dbContext.SaveChangesAsync();
 }

@@ -4,7 +4,7 @@ using Microsoft.Extensions.Logging;
 using Negotiations.Domain.Entities;
 using Negotiations.Domain.Repositories;
 
-namespace Negotiations.Application.Negotiations.Commands;
+namespace Negotiations.Application.Negotiations.Commands.CreateNegotiation;
 
 public class CreateNegotiationCommandHandler(ILogger<CreateNegotiationCommandHandler> logger,
     IProductsRepository productsRepository,

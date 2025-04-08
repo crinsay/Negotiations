@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Negotiations.Application.Negotiations.Commands;
+using Negotiations.Application.Negotiations.Commands.CreateNegotiation;
+using Negotiations.Application.Negotiations.Commands.SetNegotiationStatus;
 using Negotiations.Application.Negotiations.Dtos;
 using Negotiations.Application.Negotiations.Queries.GetAllNegotiationsForProduct;
 using Negotiations.Application.Negotiations.Queries.GetNegotiationByIdForProduct;
@@ -32,5 +33,15 @@ public class NegotiationsController(IMediator mediator) : ControllerBase
     {
         var negotiation = await mediator.Send(new GetNegotiationByIdForProductQuery(productId, negotiationId));
         return Ok(negotiation);
+    }
+
+    [HttpPatch]
+    public async Task<IActionResult> SetNegotiationStatus([FromRoute] int productId, SetNegotiationStatusCommand command)
+    {
+        command.ProductId = productId;
+
+        await mediator.Send(command);
+
+        return NoContent();
     }
 }
