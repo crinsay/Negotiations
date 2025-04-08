@@ -19,7 +19,7 @@ public class SetNegotiationStatusCommandHandler(ILogger<SetNegotiationStatusComm
             ?? throw new NotFoundException(nameof(Product), request.ProductId.ToString());
 
         var negotiation = product.Negotiations.LastOrDefault()
-            ?? throw new NotFoundException(nameof(Negotiation), request.ProductId.ToString());
+            ?? throw new NotFoundException("Negotiation for product", request.ProductId.ToString());
 
         if (!negotiation.Status.Equals(NegotiationStatuses.Pending))
             throw new NegotiationAlreadyFinalizedException(negotiation.Status.ToLower());
