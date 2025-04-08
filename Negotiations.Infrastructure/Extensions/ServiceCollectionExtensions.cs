@@ -5,6 +5,7 @@ using Negotiations.Domain.Entities;
 using Negotiations.Domain.Repositories;
 using Negotiations.Infrastructure.Persistence;
 using Negotiations.Infrastructure.Repositories;
+using Negotiations.Infrastructure.Seeders;
 
 namespace Negotiations.Infrastructure.Extensions;
 
@@ -23,6 +24,7 @@ public static class ServiceCollectionExtensions
 
         services.AddScoped<IProductsRepository, ProductsRepository>();
         services.AddScoped<INegotiationsRepository, NegotiationsRepository>();
+        services.AddScoped<INegotiationSeeder, NegotiationSeeder>();
     }
 
 }

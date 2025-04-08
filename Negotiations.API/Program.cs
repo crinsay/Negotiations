@@ -2,7 +2,8 @@ using Negotiations.API.Extensions;
 using Negotiations.API.Middleware;
 using Negotiations.Application.Extensions;
 using Negotiations.Domain.Entities;
-using  Negotiations.Infrastructure.Extensions;
+using Negotiations.Infrastructure.Extensions;
+using Negotiations.Infrastructure.Seeders;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,6 +15,12 @@ builder.Services.AddInfrastructure(builder.Configuration);
 
 
 var app = builder.Build();
+
+var scope = app.Services.CreateScope();
+var seeder = scope.ServiceProvider.GetRequiredService<INegotiationSeeder>();
+
+await seeder.Seed();
+
 
 app.UseMiddleware<ErrorHandlingMiddleware>();
 

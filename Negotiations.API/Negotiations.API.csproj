@@ -20,4 +20,8 @@
     <ProjectReference Include="..\Negotiations.Infrastructure\Negotiations.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Logs\" />
+  </ItemGroup>
+
 </Project>
