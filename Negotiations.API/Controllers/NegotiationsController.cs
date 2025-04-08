@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Negotiations.Application.Negotiations.Commands.CreateNegotiation;
 using Negotiations.Application.Negotiations.Commands.SetNegotiationStatus;
@@ -13,7 +14,7 @@ namespace Negotiations.API.Controllers;
 public class NegotiationsController(IMediator mediator) : ControllerBase
 {
     [HttpPost]
-    public async Task<IActionResult> CreateDish([FromRoute] int productId, CreateNegotiationCommand command)
+    public async Task<IActionResult> CreateNegotiation([FromRoute] int productId, CreateNegotiationCommand command)
     {
         command.ProductId = productId;
 
@@ -36,6 +37,7 @@ public class NegotiationsController(IMediator mediator) : ControllerBase
     }
 
     [HttpPatch]
+    [Authorize]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> SetNegotiationStatus([FromRoute] int productId, SetNegotiationStatusCommand command)

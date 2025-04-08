@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Negotiations.Application.Products.Commands.CreateProduct;
 using Negotiations.Application.Products.Commands.DeleteProduct;
@@ -9,9 +10,11 @@ namespace Negotiations.API.Controllers;
 
 [ApiController]
 [Route("api/products")]
+[Authorize]
 public class ProductsController(IMediator mediator) : ControllerBase
 {
     [HttpGet]
+    [AllowAnonymous]
     public async Task<IActionResult> GetAllProducts()
     {
         var products = await mediator.Send(new GetAllProductsQuery());
@@ -19,12 +22,11 @@ public class ProductsController(IMediator mediator) : ControllerBase
     }
 
     [HttpGet("{productId}")]
+    [AllowAnonymous]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetProductById([FromRoute]int productId)
     {
         var product = await mediator.Send(new GetProductByIdQuery(productId));
-        if (product == null)
-            return NotFound();
 
         return Ok(product);
     }
