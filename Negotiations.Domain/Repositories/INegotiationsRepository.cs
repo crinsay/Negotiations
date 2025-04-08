@@ -5,5 +5,5 @@ namespace Negotiations.Domain.Repositories;
 
 public interface INegotiationsRepository
 {
-    Task<IEnumerable<Negotiation>> GetAllNegotiationsAsync();
+    Task<int> CreateNegotiationAsync(Negotiation negotiation);
 }
