@@ -1,5 +1,5 @@
 @Negotiations.API_HostAddress = https://localhost:7289
-@productId = 5
+@productId = 6
 @negotiationId = 9
 
 

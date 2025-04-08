@@ -22,7 +22,7 @@ public class SetNegotiationStatusCommandHandler(ILogger<SetNegotiationStatusComm
             ?? throw new NotFoundException(nameof(Negotiation), request.ProductId.ToString());
 
         if (!negotiation.Status.Equals(NegotiationStatuses.Pending))
-            throw new Exception($"Negotiation already {request.Status.ToLower()}");
+            throw new NegotiationAlreadyFinalizedException(negotiation.Status.ToLower());
 
         mapper.Map(request, negotiation);
 
