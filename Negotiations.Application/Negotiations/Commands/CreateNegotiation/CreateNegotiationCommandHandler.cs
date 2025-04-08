@@ -3,6 +3,7 @@ using MediatR;
 using Microsoft.Extensions.Logging;
 using Negotiations.Domain.Constants;
 using Negotiations.Domain.Entities;
+using Negotiations.Domain.Exceptions;
 using Negotiations.Domain.Repositories;
 using System.Collections.Generic;
 
@@ -16,14 +17,10 @@ public class CreateNegotiationCommandHandler(ILogger<CreateNegotiationCommandHan
     public async Task<int> Handle(CreateNegotiationCommand request, CancellationToken cancellationToken)
     {
         logger.LogInformation("Creating new negotiation : {@NegotiationRequest}", request);
-        var product = await productsRepository.GetProductByIdAsync(request.ProductId);
+        var product = await productsRepository.GetProductByIdAsync(request.ProductId)
+            ?? throw new NotFoundException(nameof(Product), request.ProductId.ToString());
 
-        if (product == null)
-        {
-            logger.LogWarning("Product with id {ProductId} not found", request.ProductId);
-            throw new Exception("Product not found");
-        }
-
+        
         //Product can be negotiated if:
         // - negotiation attemts are less than maximum negotiation attempts
         if (product.Negotiations.Count >= NegotiationsLimits.MaxNegotiationsLimit)
