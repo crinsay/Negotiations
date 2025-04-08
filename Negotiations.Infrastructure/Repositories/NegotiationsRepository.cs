@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Negotiations.Domain.Entities;
+﻿using Negotiations.Domain.Entities;
 using Negotiations.Domain.Repositories;
 using Negotiations.Infrastructure.Persistence;
 
@@ -7,9 +6,10 @@ namespace Negotiations.Infrastructure.Repositories;
 
 internal class NegotiationsRepository(NegotiationsDbContext dbContext) : INegotiationsRepository
 {
-    public async Task<IEnumerable<Negotiation>> GetAllNegotiationsAsync()
+    public async Task<int> CreateNegotiationAsync(Negotiation negotiation)
     {
-        var negotiations = await dbContext.Negotiations.ToListAsync();
-        return negotiations;
+        dbContext.Negotiations.Add(negotiation);
+        await dbContext.SaveChangesAsync();
+        return negotiation.Id;
     }
 }

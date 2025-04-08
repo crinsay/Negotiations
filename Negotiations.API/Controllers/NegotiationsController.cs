@@ -1,16 +1,47 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Negotiations.Application.Negotiations;
+﻿using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using Negotiations.Application.Negotiations.Commands.CreateNegotiation;
+using Negotiations.Application.Negotiations.Commands.SetNegotiationStatus;
+using Negotiations.Application.Negotiations.Dtos;
+using Negotiations.Application.Negotiations.Queries.GetAllNegotiationsForProduct;
+using Negotiations.Application.Negotiations.Queries.GetNegotiationByIdForProduct;
 
 namespace Negotiations.API.Controllers;
 
 [ApiController]
 [Route("api/products/{productId}/negotiation")]
-public class NegotiationsController(INegotiationsService negotiationsService) : ControllerBase
+public class NegotiationsController(IMediator mediator) : ControllerBase
 {
-    [HttpGet]
-    public async Task<IActionResult> GetAllNegotiaions()
+    [HttpPost]
+    public async Task<IActionResult> CreateDish([FromRoute] int productId, CreateNegotiationCommand command)
     {
-        var negotiations = await negotiationsService.GetAllNegotiationsAsync();
+        command.ProductId = productId;
+
+        await mediator.Send(command);
+        return Created();
+    }
+
+    [HttpGet]
+    public async Task<ActionResult<IEnumerable<NegotiationDto>>> GetAllNegotiationsForProduct([FromRoute] int productId)
+    {
+        var negotiations = await mediator.Send(new GetAllNegotiationsForProductQuery(productId));
         return Ok(negotiations);
+    }
+
+    [HttpGet("{negotiationId}")]
+    public async Task<IActionResult> GetNegotiationByIdForProduct([FromRoute] int productId, [FromRoute]int negotiationId)
+    {
+        var negotiation = await mediator.Send(new GetNegotiationByIdForProductQuery(productId, negotiationId));
+        return Ok(negotiation);
+    }
+
+    [HttpPatch]
+    public async Task<IActionResult> SetNegotiationStatus([FromRoute] int productId, SetNegotiationStatusCommand command)
+    {
+        command.ProductId = productId;
+
+        await mediator.Send(command);
+
+        return NoContent();
     }
 }

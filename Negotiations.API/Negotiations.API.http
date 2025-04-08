@@ -1,28 +1,61 @@
 @Negotiations.API_HostAddress = https://localhost:7289
 @productId = 1
+@negotiationId = 6
 
 
 
+//Get all products
 GET {{Negotiations.API_HostAddress}}/api/products
 
 ###
 
-
+//Get product by id
 GET {{Negotiations.API_HostAddress}}/api/products/{{productId}}
 
 ###
 
-
-GET {{Negotiations.API_HostAddress}}/api/products/{{productId}}/negotiation
-
-###
-
+//Create a new product
 POST {{Negotiations.API_HostAddress}}/api/products
 Content-Type: application/json
 
 {
-  "Name": "Product 1",
-  "Price": 100
+  "Name": "Product 3",
+  "Price": 100.04
+}
+
+###
+
+//Delete a product
+DELETE {{Negotiations.API_HostAddress}}/api/products/{{productId}}
+
+###
+
+//Create a negotiation
+POST {{Negotiations.API_HostAddress}}/api/products/{{productId}}/negotiation
+Content-Type: application/json
+
+{
+  "SuggestedPrice": 700
+}
+
+###
+
+//Get all negotiations for a product
+GET {{Negotiations.API_HostAddress}}/api/products/{{productId}}/negotiation
+
+###
+
+//Get a negotiation by id
+GET {{Negotiations.API_HostAddress}}/api/products/{{productId}}/negotiation/{{negotiationId}}
+
+###
+
+//Set a negotiation status
+PATCH {{Negotiations.API_HostAddress}}/api/products/{{productId}}/negotiation
+Content-Type: application/json
+
+{
+  "Status": "Accepted"
 }
 
 ###

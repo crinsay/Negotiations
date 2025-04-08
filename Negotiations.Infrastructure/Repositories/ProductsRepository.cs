@@ -14,6 +14,12 @@ internal class ProductsRepository(NegotiationsDbContext dbContext) : IProductsRe
         return product.Id;
     }
 
+    public async Task DeleteProductAsync(Product product)
+    {
+        dbContext.Remove(product);
+        await dbContext.SaveChangesAsync();
+    }
+
     public async Task<IEnumerable<Product>> GetAllProductsAsync()
     {
         var products = await dbContext.Products.ToListAsync();
@@ -22,7 +28,11 @@ internal class ProductsRepository(NegotiationsDbContext dbContext) : IProductsRe
 
     public async Task<Product?> GetProductByIdAsync(int id)
     {
-        var product = await dbContext.Products.FirstOrDefaultAsync(p => p.Id == id);
+        var product = await dbContext.Products
+            .Include(p => p.Negotiations)
+            .FirstOrDefaultAsync(p => p.Id == id);
         return product;
     }
+
+    public Task SaveChanges() => dbContext.SaveChangesAsync();
 }
