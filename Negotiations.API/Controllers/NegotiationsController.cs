@@ -14,12 +14,13 @@ namespace Negotiations.API.Controllers;
 public class NegotiationsController(IMediator mediator) : ControllerBase
 {
     [HttpPost]
+     [ProducesResponseType(StatusCodes.Status201Created)]
     public async Task<IActionResult> CreateNegotiation([FromRoute] int productId, CreateNegotiationCommand command)
     {
         command.ProductId = productId;
 
-        await mediator.Send(command);
-        return Created();
+        var negotiationId = await mediator.Send(command);
+        return CreatedAtAction(nameof(GetNegotiationByIdForProduct), new { productId, negotiationId }, null);
     }
 
     [HttpGet]

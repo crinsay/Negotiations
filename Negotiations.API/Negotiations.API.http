@@ -1,8 +1,30 @@
 @Negotiations.API_HostAddress = https://localhost:7289
-@productId = 6
-@negotiationId = 9
+@productId = 1
+@negotiationId = 1
 
+//Set access token after login
+@accesToken = CfDJ8A--T2ngnsNLuIEUjeCbA0aaprXItMSZVWINQxDYFrauXECVsPrN3iRcgW3dtZ4khy1ndcvFhDEcfOCW1aybxN_FmbK3qjHG4EuUwVa0ksGP709N21lrWXTD8qNPGwHKiouIDw5SnkKZ0jPBQuKiZrUb3ByUIjfFzx03ACYo_YU9bEYJjwvUhBqi_LF_dOXEP49M4VEzRLaYrYXHyE82nQZeaZ0vlghFhlJiSnYQIWospkaMDfjD16QrloQKv3PB5spSpyMOCsDzXUP2sNTUCX1RL4lW_aW635kmHUoAoz7qtEV7fLli2uelakqirl29FQsDntyDyqR2vnNz_Qb3nVuuEb31n7Ryj8gCB5rawGFunqv-7_YpMXOeyL4x2fysGDQf5rEW06clM494kpoLP16GjLjmOb_shkAcU2-LQsmeO_jkpbfw0tnTGbg-ULyP8dvhl8jT2ArKNx7Zlc30X75mhllxsIoaSQqX_ibFUanxQup-yTwlypJUWnc7bDJltWYgebKz_TC09YDZX8H0INBL1YjnDnBX4k1s6ljNtVRupqD-3W0gySCmkysj1eO6mKSdnOYQ-fBMKvVK734PEReCaQozahZUyx0fbJgiTG0al_PGatH8uafA_Cwt9wTD0YQmLYzwKhhyuEcDWP3BajOPtbNgrwAgpzZjI_vOpmJlleF3saB--awd_JXU22KvDgCFtwCk6vP3P5AtBryzQS4
 
+//Register a new employee
+POST {{Negotiations.API_HostAddress}}/api/identity/register
+Content-Type: application/json
+ 
+{
+    "email": "employee@negotiations.com",
+    "password": "Password1!"
+}
+ 
+###
+ 
+//Login as a employee
+POST {{Negotiations.API_HostAddress}}/api/identity/login
+Content-Type: application/json
+ 
+{
+    "email": "employee@negotiations.com",
+    "password": "Password1!"
+}
+###
 
 //Get all products
 GET {{Negotiations.API_HostAddress}}/api/products
@@ -17,9 +39,9 @@ GET {{Negotiations.API_HostAddress}}/api/products/{{productId}}
 //Create a new product
 POST {{Negotiations.API_HostAddress}}/api/products
 Content-Type: application/json
-
+Authorization: Bearer {{accesToken}}
 {
-  "Name": "Product 3",
+  "Name": "Product 6",
   "Price": 100.04
 }
 
@@ -27,10 +49,34 @@ Content-Type: application/json
 
 //Delete a product
 DELETE {{Negotiations.API_HostAddress}}/api/products/{{productId}}
-
+Authorization: Bearer {{accesToken}}
 ###
 
 //Create a negotiation
+# @productId = 4 
+//It will be last possible negotiation for this product
+POST {{Negotiations.API_HostAddress}}/api/products/{{productId}}/negotiation
+Content-Type: application/json
+
+{
+  "SuggestedPrice": 700
+}
+
+###
+
+# @productId = 5
+//There will be an exception thrown due to negotiation limit
+POST {{Negotiations.API_HostAddress}}/api/products/{{productId}}/negotiation
+Content-Type: application/json
+
+{
+  "SuggestedPrice": 700
+}
+
+###
+
+# @productId = 3
+//There will be an exception thrown due to expiration date
 POST {{Negotiations.API_HostAddress}}/api/products/{{productId}}/negotiation
 Content-Type: application/json
 
@@ -45,6 +91,8 @@ GET {{Negotiations.API_HostAddress}}/api/products/{{productId}}/negotiation
 
 ###
 
+# @productId = 1
+# @negotiationId = 1
 //Get a negotiation by id
 GET {{Negotiations.API_HostAddress}}/api/products/{{productId}}/negotiation/{{negotiationId}}
 
@@ -53,27 +101,13 @@ GET {{Negotiations.API_HostAddress}}/api/products/{{productId}}/negotiation/{{ne
 //Set a negotiation status
 PATCH {{Negotiations.API_HostAddress}}/api/products/{{productId}}/negotiation
 Content-Type: application/json
-
+Authorization: Bearer {{accesToken}}
 {
   "Status": "Accepted"
 }
 
 ###
-POST {{Negotiations.API_HostAddress}}/register
-Content-Type: application/json
- 
-{
-    "email": "testuser@test.com",
-    "password": "Password1!"
-}
- 
-###
- 
-POST {{Negotiations.API_HostAddress}}/login
-Content-Type: application/json
- 
-{
-    "email": "testuser@test.com",
-    "password": "Password1!"
-}
+
+GET {{Negotiations.API_HostAddress}}/api/products/{{productId}}/negotiation/{{negotiationId}}
+
 ###

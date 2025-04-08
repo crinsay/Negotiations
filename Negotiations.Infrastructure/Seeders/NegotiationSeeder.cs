@@ -1,4 +1,5 @@
-﻿using Negotiations.Domain.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using Negotiations.Domain.Entities;
 using Negotiations.Infrastructure.Persistence;
 
 namespace Negotiations.Infrastructure.Seeders;
@@ -9,7 +10,7 @@ internal class NegotiationSeeder(NegotiationsDbContext dbContext) : INegotiation
     {
         if (await dbContext.Database.CanConnectAsync())
         {
-            if (!dbContext.Negotiations.Any())
+            if (!await dbContext.Negotiations.AnyAsync())
             {
                 var products = GetProducts();
                 dbContext.Products.AddRange(products);
@@ -19,13 +20,12 @@ internal class NegotiationSeeder(NegotiationsDbContext dbContext) : INegotiation
                 dbContext.Negotiations.AddRange(negotiations);
                 await dbContext.SaveChangesAsync();
             }
-
         }
     }
 
     private IEnumerable<Product> GetProducts()
     {
-        List<Product> products = [
+        IEnumerable<Product> products = [
             new()
             {
                 Name = "Product 1",
@@ -58,7 +58,7 @@ internal class NegotiationSeeder(NegotiationsDbContext dbContext) : INegotiation
 
     private IEnumerable<Negotiation> GetNegotiations()
     {
-        List<Negotiation> negotiations = [
+        IEnumerable<Negotiation> negotiations = [
             new()
             {
                 ProductId = 1,
@@ -77,12 +77,6 @@ internal class NegotiationSeeder(NegotiationsDbContext dbContext) : INegotiation
                 SuggestedPrice = 30.00m,
                 Status = "Declined",
                 DeclineDate = DateTime.UtcNow.AddDays(-10),
-            },
-            new()
-            {
-                ProductId = 3,
-                SuggestedPrice = 60.00m,
-                Status = "Pending",
             },
             new()
             {

@@ -32,9 +32,10 @@ public class ProductsController(IMediator mediator) : ControllerBase
     }
 
     [HttpPost]
+    [ProducesResponseType(StatusCodes.Status201Created)]
     public async Task<IActionResult> CreateProductAsync(CreateProductCommand command)
     {
-         var productId = await mediator.Send(command);
+        var productId = await mediator.Send(command);
         return CreatedAtAction(nameof(GetProductById), new { productId }, null);
     }
 
