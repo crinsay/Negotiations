@@ -1,5 +1,5 @@
 @Negotiations.API_HostAddress = https://localhost:7289
-@productId = 1
+@productId = 2
 
 
 
@@ -24,5 +24,9 @@ Content-Type: application/json
   "Name": "Product 3",
   "Price": 100.04
 }
+
+###
+
+DELETE {{Negotiations.API_HostAddress}}/api/products/{{productId}}
 
 ###

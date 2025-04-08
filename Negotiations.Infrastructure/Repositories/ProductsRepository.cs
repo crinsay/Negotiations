@@ -14,6 +14,12 @@ internal class ProductsRepository(NegotiationsDbContext dbContext) : IProductsRe
         return product.Id;
     }
 
+    public async Task DeleteProductAsync(Product product)
+    {
+        dbContext.Remove(product);
+        await dbContext.SaveChangesAsync();
+    }
+
     public async Task<IEnumerable<Product>> GetAllProductsAsync()
     {
         var products = await dbContext.Products.ToListAsync();
