@@ -36,6 +36,8 @@ public class NegotiationsController(IMediator mediator) : ControllerBase
     }
 
     [HttpPatch]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> SetNegotiationStatus([FromRoute] int productId, SetNegotiationStatusCommand command)
     {
         command.ProductId = productId;
