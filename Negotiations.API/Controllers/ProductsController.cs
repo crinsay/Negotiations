@@ -19,6 +19,7 @@ public class ProductsController(IMediator mediator) : ControllerBase
     }
 
     [HttpGet("{productId}")]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetProductById([FromRoute]int productId)
     {
         var product = await mediator.Send(new GetProductByIdQuery(productId));
@@ -36,6 +37,8 @@ public class ProductsController(IMediator mediator) : ControllerBase
     }
 
     [HttpDelete("{productId}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> DeleteProductAsync([FromRoute] int productId)
     {
         await mediator.Send(new DeleteProductCommand(productId));
