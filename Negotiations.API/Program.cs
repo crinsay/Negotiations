@@ -1,4 +1,4 @@
-using Microsoft.OpenApi.Models;
+using Negotiations.API.Extensions;
 using Negotiations.API.Middleware;
 using Negotiations.Application.Extensions;
 using Negotiations.Domain.Entities;
@@ -7,37 +7,11 @@ using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
 
-builder.Services.AddSwaggerGen(c =>
-{
-    c.AddSecurityDefinition("bearerAuth", new OpenApiSecurityScheme
-    {
-        Type = SecuritySchemeType.Http,
-        Scheme = "Bearer"
-    });
-
-    c.AddSecurityRequirement(new OpenApiSecurityRequirement
-     {
-         {
-             new OpenApiSecurityScheme
-             {
-                 Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "bearerAuth"}
-             },
-             []
-         }
-
-     });
-});
-
-builder.Services.AddEndpointsApiExplorer();
-
-builder.Services.AddScoped<ErrorHandlingMiddleware>();
-
+builder.AddPresentation();
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
 
-builder.Host.UseSerilog((context, configuration) => configuration.ReadFrom.Configuration(context.Configuration));
 
 var app = builder.Build();
 
