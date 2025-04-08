@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Negotiations.Domain.Entities;
 using Negotiations.Domain.Repositories;
 using Negotiations.Infrastructure.Persistence;
 using Negotiations.Infrastructure.Repositories;
@@ -16,6 +17,9 @@ public static class ServiceCollectionExtensions
                 options
                     .UseSqlServer(connectionString)
                     .EnableSensitiveDataLogging());
+
+        services.AddIdentityApiEndpoints<Employee>()
+            .AddEntityFrameworkStores<NegotiationsDbContext>();
 
         services.AddScoped<IProductsRepository, ProductsRepository>();
         services.AddScoped<INegotiationsRepository, NegotiationsRepository>();

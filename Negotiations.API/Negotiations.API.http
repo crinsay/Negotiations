@@ -59,3 +59,21 @@ Content-Type: application/json
 }
 
 ###
+POST {{Negotiations.API_HostAddress}}/register
+Content-Type: application/json
+ 
+{
+    "email": "testuser@test.com",
+    "password": "Password1!"
+}
+ 
+###
+ 
+POST {{Negotiations.API_HostAddress}}/login
+Content-Type: application/json
+ 
+{
+    "email": "testuser@test.com",
+    "password": "Password1!"
+}
+###

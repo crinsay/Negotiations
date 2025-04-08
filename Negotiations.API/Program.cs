@@ -1,5 +1,6 @@
 using Negotiations.API.Middleware;
 using Negotiations.Application.Extensions;
+using Negotiations.Domain.Entities;
 using  Negotiations.Infrastructure.Extensions;
 using Serilog;
 
@@ -30,6 +31,8 @@ if (app.Environment.IsDevelopment())
 
 
 app.UseHttpsRedirection();
+
+app.MapIdentityApi<Employee>();
 
 app.UseAuthorization();
 
